@@ -52,7 +52,7 @@ steps:
     out:
       - id: docker_repository
       - id: docker_digest
-      - id: entity_id
+      - id: entityid
 
 
 
@@ -157,7 +157,7 @@ steps:
       - id: parentid
         source: "#adminUploadSynId"
       - id: used_entity
-        source: "#get_docker_submission/entity_id"
+        source: "#get_docker_submission/entityid"
       - id: executed_entity
         source: "#workflowSynapseId"
       - id: synapse_config
