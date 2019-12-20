@@ -267,8 +267,8 @@ steps:
     in:
       - id: submissionid
         source: "#submissionId"
-      - id: annotation_values
-        source: "#scoring/results"
+      #- id: annotation_values
+      #  source: "#scoring/results"
       - id: to_public
         default: true
       - id: force_change_annotation_acl
