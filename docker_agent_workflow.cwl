@@ -52,7 +52,7 @@ steps:
     out:
       - id: docker_repository
       - id: docker_digest
-      - id: entityid
+      - id: entity_id
 
 
 
