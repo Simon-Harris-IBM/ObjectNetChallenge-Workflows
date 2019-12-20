@@ -267,7 +267,8 @@ steps:
     in:
       - id: submissionid
         source: "#submissionId"
-      #- id: annotation_values
+      - id: annotation_values
+        valueFrom: "dummy annotation value"
       #  source: "#scoring/results"
       - id: to_public
         default: true
