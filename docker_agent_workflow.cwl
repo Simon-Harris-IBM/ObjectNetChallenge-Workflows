@@ -258,7 +258,8 @@ steps:
         source: "#submissionId"
       - id: synapse_config
         source: "#synapseConfig"
-      #- id: results
+      - id: results
+        valueFrom: "dummy results"
       #  source: "#scoring/results"
     out: []
 
