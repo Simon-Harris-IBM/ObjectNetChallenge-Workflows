@@ -259,7 +259,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: results
-        valueFrom: "{'prediction_file_status': 'SCORED'}"
+        valueFrom: {"prediction_file_status": "SCORED"}
       #  source: "#scoring/results"
     out: []
 
