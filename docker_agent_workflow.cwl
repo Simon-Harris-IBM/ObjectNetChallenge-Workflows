@@ -42,7 +42,7 @@ steps:
     out: []
 
 
-  get_docker_submission
+  get_docker_submission:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/get_submission_docker.cwl
     in:
       - id: submissionid
