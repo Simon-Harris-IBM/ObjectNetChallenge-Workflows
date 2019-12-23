@@ -251,33 +251,33 @@ steps:
   #  out:
   #    - id: results
       
-  score_email:
-    run: score_email.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: results
-        valueFrom: '{"prediction_file_status": "SCORED"}'
-      #  source: "#scoring/results"
-    out: []
-
-  annotate_submission_with_output:
-    run: annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: annotation_values
-        valueFrom: "dummy annotation value"
-      #  source: "#scoring/results"
-      - id: to_public
-        default: true
-      - id: force_change_annotation_acl
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: previous_annotation_finished
-        source: "#annotate_validation_with_output/finished"
-    out: [finished]
+#  score_email:
+#    run: score_email.cwl
+#    in:
+#      - id: submissionid
+#        source: "#submissionId"
+#      - id: synapse_config
+#        source: "#synapseConfig"
+#      - id: results
+#        valueFrom: '{"prediction_file_status": "SCORED"}'
+#      #  source: "#scoring/results"
+#    out: []
+#
+#  annotate_submission_with_output:
+#    run: annotate_submission.cwl
+#    in:
+#      - id: submissionid
+#        source: "#submissionId"
+#      - id: annotation_values
+#        valueFrom: "dummy annotation value"
+#      #  source: "#scoring/results"
+#      - id: to_public
+#        default: true
+#      - id: force_change_annotation_acl
+#        default: true
+#      - id: synapse_config
+#        source: "#synapseConfig"
+#      - id: previous_annotation_finished
+#        source: "#annotate_validation_with_output/finished"
+#    out: [finished]
  
