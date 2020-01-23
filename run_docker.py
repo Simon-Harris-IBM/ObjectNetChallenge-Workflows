@@ -94,6 +94,9 @@ def main(syn, args):
     docker_image = args.docker_repository + "@" + args.docker_digest
 
     #These are the volumes that you want to mount onto your docker container
+    # Line 100 is important because CWL expects output in
+    # output/....., this is why, because all the files your model are writing out
+    # are writing to this directory on your instance.
     output_dir = os.path.join(os.getcwd(), "output")
     # Must make the directory or else it will be mounted into docker as a file
     os.mkdir(output_dir)
@@ -105,6 +108,14 @@ def main(syn, args):
     # It has to be in this format '/output:rw'
     mounted_volumes = {output_dir: '/output:rw',
                        input_dir: '/input:ro'}
+    # If you want your model to write to /workspace/output, change
+    # to "output_dir: '/workspace/output:rw'"
+    # If you want your data to live in /data, change /input:ro to
+    # /data:ro
+    # Example
+    # mounted_volumes = {output_dir: '/workspace/output:rw',
+    #                    input_dir: '/data:ro'}
+
     #All mounted volumes here in a list
     all_volumes = [output_dir, input_dir]
     #Mount volumes
@@ -129,8 +140,11 @@ def main(syn, args):
         #Run as detached, logs will stream below
         print("running container")
         try:
+            # You can remove that 'bash /app/train.sh' line
+            # if you build your Dockerfile with ENTRYPOINT at the end.
+            # Learn more about ENTRYPOINT on docker.
             container = client.containers.run(docker_image,
-                                              'bash /app/train.sh',
+                                              #'bash /app/train.sh',
                                               detach=True, volumes=volumes,
                                               name=args.submissionid,
                                               network_disabled=True,
@@ -173,10 +187,12 @@ def main(syn, args):
 
     output_folder = os.listdir(output_dir)
     if not output_folder:
-        raise Exception("No 'predictions.csv' file written to /output, "
+        raise Exception("No files written to /output, "
                         "please check inference docker")
-    elif "predictions.csv" not in output_folder:
-        raise Exception("No 'predictions.csv' file written to /output, "
+    elif "myfilename.txt" not in output_folder:
+        # The reason why this says /output, is because your container
+        # expects there to be a folder named /output to write to
+        raise Exception("No 'myfilename.txt' file written to /output, "
                         "please check inference docker")
     # CWL has a limit of the array of files it can accept in a folder
     # therefore creating a tarball is sometimes necessary
