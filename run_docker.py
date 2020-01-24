@@ -189,10 +189,10 @@ def main(syn, args):
     if not output_folder:
         raise Exception("No files written to /output, "
                         "please check inference docker")
-    elif "myfilename.txt" not in output_folder:
+    elif "predictions.txt" not in output_folder:
         # The reason why this says /output, is because your container
         # expects there to be a folder named /output to write to
-        raise Exception("No 'myfilename.txt' file written to /output, "
+        raise Exception("No 'predictions.txt' file written to /output, "
                         "please check inference docker")
     # CWL has a limit of the array of files it can accept in a folder
     # therefore creating a tarball is sometimes necessary
