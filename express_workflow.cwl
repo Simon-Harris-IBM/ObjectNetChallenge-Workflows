@@ -157,7 +157,7 @@ steps:
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
-i w
+
   validation:
     run: validate.cwl
     in:
