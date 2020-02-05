@@ -115,7 +115,7 @@ steps:
         source: "#synapseConfig"
       - id: input_dir
         # Replace this with correct datapath
-        valueFrom: "/root/simon/MAX-ResNet-50-GPU-images"
+        valueFrom: "/root/simon/test-images"
       - id: docker_script
         default:
           class: File
