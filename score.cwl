@@ -13,8 +13,8 @@ hints:
 inputs:
   - id: inputfile
     type: File
-  - id: goldstandard
-    type: File
+#  - id: goldstandard
+#    type: File
   - id: check_validation_finished
     type: boolean?
 
@@ -22,8 +22,8 @@ arguments:
   - valueFrom: score.py
   - valueFrom: $(inputs.inputfile.path)
     prefix: -f
-  - valueFrom: $(inputs.goldstandard.path)
-    prefix: -g
+#  - valueFrom: $(inputs.goldstandard.path)
+#    prefix: -g
   - valueFrom: results.json
     prefix: -r
 
@@ -39,7 +39,7 @@ requirements:
           parser = argparse.ArgumentParser()
           parser.add_argument("-f", "--submissionfile", required=True, help="Submission File")
           parser.add_argument("-r", "--results", required=True, help="Scoring results")
-          parser.add_argument("-g", "--goldstandard", required=True, help="Goldstandard for scoring")
+#          parser.add_argument("-g", "--goldstandard", required=True, help="Goldstandard for scoring")
 
           args = parser.parse_args()
           score = 3

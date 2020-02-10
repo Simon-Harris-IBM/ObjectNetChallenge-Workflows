@@ -213,17 +213,17 @@ steps:
         source: "#validation_email/finished"
     out: [finished]
 
-#  scoring:
-#    run: score.cwl
-#    in:
-#      - id: inputfile
-#        source: "#run_docker/predictions"
+  scoring:
+    run: score.cwl
+    in:
+      - id: inputfile
+        source: "#run_docker/predictions"
 #      - id: goldstandard
 #        source: "#download_goldstandard/filepath"
-#      - id: check_validation_finished
-#        source: "#check_status/finished"
-#    out:
-#      - id: results
+      - id: check_validation_finished
+        source: "#check_status/finished"
+    out:
+      - id: results
       
 #  score_email:
 #    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/score_email.cwl
