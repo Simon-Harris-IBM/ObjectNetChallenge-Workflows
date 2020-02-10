@@ -43,6 +43,7 @@ requirements:
 
           args = parser.parse_args()
           score = 3
+          args.results = "/input/score.json"
           prediction_file_status = "SCORED"
           result = {'score':score, 'prediction_file_status':prediction_file_status}
           with open(args.results, 'w') as o:
