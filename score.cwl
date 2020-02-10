@@ -46,7 +46,8 @@ requirements:
           args.results = "/input/score.json"
           prediction_file_status = "SCORED"
           result = {'score':score, 'prediction_file_status':prediction_file_status}
-          with open(args.results, 'w') as o:
+          #with open(args.results, 'w') as o:
+          with open('/input/score.json', 'w') as o:
             o.write(json.dumps(result))
      
 outputs:
