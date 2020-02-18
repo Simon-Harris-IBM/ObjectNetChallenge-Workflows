@@ -115,7 +115,7 @@ steps:
         source: "#synapseConfig"
       - id: input_dir
         # Replace this with correct datapath
-        valueFrom: "/root/simon/test-images"
+        valueFrom: "/input/eval-q"
       - id: docker_script
         default:
           class: File
