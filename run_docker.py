@@ -107,7 +107,7 @@ def main(syn, args):
     # volumes to be + permissions in docker (ro, rw)
     # It has to be in this format '/output:rw'
     mounted_volumes = {output_dir: '/output:rw',
-                       input_dir: '/input:ro'}
+                       input_dir: '/input/main-q:ro'}
     # If you want your model to write to /workspace/output, change
     # to "output_dir: '/workspace/output:rw'"
     # If you want your data to live in /data, change /input:ro to
