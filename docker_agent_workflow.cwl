@@ -59,7 +59,9 @@ steps:
     out:
       - id: docker_repository
       - id: docker_digest
-      - id: entityid
+      #- id: entityid
+      # *SH 
+      - id: entity_id
       - id: results
 
 #  download_goldstandard:
@@ -149,7 +151,9 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#annotate_docker_validation_with_output/finished"
+	# *SH
+        #source: "#annotate_docker_validation_with_output/finished"
+        source: "#annotate_submission_main_userid/finished"
     out: [finished]
 
   validation:
