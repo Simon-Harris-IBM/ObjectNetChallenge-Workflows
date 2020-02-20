@@ -30,20 +30,15 @@ outputs: []
 
 steps:
 
-  get_docker_submission:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/get_submission.cwl
+  get_submissionid:
+    run: get_linked_submissionid.cwl
     in:
       - id: submissionid
         source: "#submissionId"
       - id: synapse_config
         source: "#synapseConfig"
     out:
-      - id: filepath
-      - id: docker_repository
-      - id: docker_digest
-      - id: entity_id
-      - id: entity_type
-      - id: results
+      - id: submissionid
 
   get_docker_config:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/get_docker_config.cwl
@@ -53,6 +48,19 @@ steps:
     out: 
       - id: docker_registry
       - id: docker_authentication
+
+  get_docker_submission:
+    run: get_submission_docker.cwl
+    in:
+      - id: submissionid
+        source: "#get_submissionid/submissionid"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: docker_repository
+      - id: docker_digest
+      - id: entityid
+      - id: results
 
 #  download_goldstandard:
 #    run: https://raw.githubusercontent.com/Sage-Bionetworks/synapse-client-cwl-tools/v0.1/synapse-get-tool.cwl
@@ -65,27 +73,13 @@ steps:
 #    out:
 #      - id: filepath
 
-  validate_docker:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_docker.cwl
-    in:
-      - id: docker_repository
-        source: "#get_docker_submission/docker_repository"
-      - id: docker_digest
-        source: "#get_docker_submission/docker_digest"
-      - id: synapse_config
-        source: "#synapseConfig"
-    out:
-      - id: results
-      - id: status
-      - id: invalid_reasons
-
-  annotate_docker_validation_with_output:
+  annotate_submission_main_userid:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#validate_docker/results"
+        source: "#get_docker_submission/results"
       - id: to_public
         default: true
       - id: force_change_annotation_acl
@@ -108,7 +102,7 @@ steps:
       - id: docker_authentication
         source: "#get_docker_config/docker_authentication"
       - id: status
-        source: "#validate_docker/status"
+        valueFrom: "VALIDATED"
       - id: parentid
         source: "#submitterUploadSynId"
       - id: synapse_config
