@@ -100,7 +100,8 @@ steps:
       - id: status
         source: "#validate_docker/status"
       - id: previous_annotation_finished
-        source: "#annotate_validation_with_output/finished"
+        #source: "#annotate_validation_with_output/finished"
+        source: "#annotate_docker_validation_with_output/finished"
       - id: previous_email_finished
         source: "#validation_email/finished"
     out: [finished]
