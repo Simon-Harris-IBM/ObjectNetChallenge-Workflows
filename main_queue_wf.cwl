@@ -103,7 +103,8 @@ steps:
         #source: "#annotate_validation_with_output/finished"
         source: "#annotate_docker_validation_with_output/finished"
       - id: previous_email_finished
-        source: "#validation_email/finished"
+        #source: "#validation_email/finished"
+        source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
   submit_to_challenge:
