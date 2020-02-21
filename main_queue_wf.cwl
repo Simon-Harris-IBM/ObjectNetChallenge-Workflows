@@ -141,7 +141,7 @@ steps:
       - id: parentid
         source: "#submitterUploadSynId"
       - id: evaluationid
-        source: "#get_backend_queue/qid"
+        source: "#get_backend_queue.py/qid"
         #valueFrom: "9614390"
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
