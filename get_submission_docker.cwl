@@ -68,7 +68,9 @@ outputs:
       glob: results.json
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['docker_digest'])
-  - id: entityid
+  # *SH
+  #- id: entityid
+  - id: entity_id
     type: string
     outputBinding:
       glob: results.json
