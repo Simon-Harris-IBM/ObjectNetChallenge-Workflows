@@ -13,6 +13,28 @@ class: Workflow
 requirements:
   - class: StepInputExpressionRequirement
 
+  - class: InlineJavascriptRequirement
+  - class: InitialWorkDirRequirement
+    listing:
+      - entryname: get_backend_queue.py
+        entry: |
+          #!/usr/bin/env python
+          #import synapseclient
+          #import argparse
+          #import json
+          #import os
+
+          import random
+          #parser = argparse.ArgumentParser()
+          #parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
+          #parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
+          #args = parser.parse_args()
+          #syn = synapseclient.Synapse(configPath=args.synapse_config)
+          #syn.login()
+          #sub = syn.getSubmission(args.submissionid, downloadLocation=".")
+          qid = random.choice(["9614390","9614420"])
+          print("=> Sending to backend queue: ", q)
+
 inputs:
   - id: submissionId
     type: int
@@ -119,7 +141,8 @@ steps:
       - id: parentid
         source: "#submitterUploadSynId"
       - id: evaluationid
-        valueFrom: "9614390"
+        source: "get_backend_queue/qid"
+        #valueFrom: "9614390"
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
 #      - id: previous_email_finished
