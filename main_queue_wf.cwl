@@ -134,6 +134,7 @@ steps:
 
   get_backend_queue:
     run: get_backend_queue.cwl
+    in: []
     out: [qid] 
 
   submit_to_challenge:
