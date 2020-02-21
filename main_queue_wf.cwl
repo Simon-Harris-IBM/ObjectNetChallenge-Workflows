@@ -135,10 +135,10 @@ steps:
   get_backend_queue:
     run: get_backend_queue.cwl
     in:
-      -id: queue_ids
-       valueFrom: "9614390"
+      - id: queue_ids
+        valueFrom: "9614390"
     out:
-      -id: qid 
+      - id: qid 
 
   submit_to_challenge:
     run: submit_to_challenge.cwl
