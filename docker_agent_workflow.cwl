@@ -151,9 +151,9 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        # SH
-        #source: "#annotate_docker_validation_with_output/finished"
         source: "#annotate_submission_main_userid/finished"
+      # SH
+      #source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
   validation:
