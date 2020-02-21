@@ -135,7 +135,7 @@ steps:
   get_backend_queue:
     run: get_backend_queue.cwl
     in:
-      - id: queue_ids
+      - id: queueids
         valueFrom: "9614390"
     out:
       - id: qid 
