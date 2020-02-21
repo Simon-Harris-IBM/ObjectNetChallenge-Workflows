@@ -13,30 +13,30 @@ class: Workflow
 requirements:
   - class: StepInputExpressionRequirement
 
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: get_backend_queue.py
-        entry: |
-          #!/usr/bin/env python
-          #import synapseclient
-          #import argparse
-          import json
-          import os
-
-          import random
-          #parser = argparse.ArgumentParser()
-          #parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
-          #parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
-          #args = parser.parse_args()
-          #syn = synapseclient.Synapse(configPath=args.synapse_config)
-          #syn.login()
-          #sub = syn.getSubmission(args.submissionid, downloadLocation=".")
-          qid = random.choice(["9614390","9614420"])
-          q_json = {'qid': qid}
-          with open('q.json', 'w') as o:
-            o.write(json.dumps(q_json))
-          print("=> Sending to backend queue: ", q_json)
+#  - class: InlineJavascriptRequirement
+#  - class: InitialWorkDirRequirement
+#    listing:
+#      - entryname: get_backend_queue.py
+#        entry: |
+#          #!/usr/bin/env python
+#          #import synapseclient
+#          #import argparse
+#          import json
+#          import os
+#
+#          import random
+#          #parser = argparse.ArgumentParser()
+#          #parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
+#          #parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
+#          #args = parser.parse_args()
+#          #syn = synapseclient.Synapse(configPath=args.synapse_config)
+#          #syn.login()
+#          #sub = syn.getSubmission(args.submissionid, downloadLocation=".")
+#          qid = random.choice(["9614390","9614420"])
+#          q_json = {'qid': qid}
+#          with open('q.json', 'w') as o:
+#            o.write(json.dumps(q_json))
+#          print("=> Sending to backend queue: ", q_json)
 
 inputs:
   - id: submissionId
@@ -132,6 +132,10 @@ steps:
         source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
+  get_backend_queue:
+    run: get_backend_queue.cwl
+    out: [qid] 
+
   submit_to_challenge:
     run: submit_to_challenge.cwl
     in:
@@ -144,12 +148,12 @@ steps:
       - id: parentid
         source: "#submitterUploadSynId"
       - id: evaluationid
-        type: string
-        outputBinding:
-          glob: q.json
-          loadContents: true
-          outputEval: $(JSON.parse(self[0].contents)['qid'])
-        #source: "#get_backend_queue.py/qid"
+        #type: string
+        #outputBinding:
+        #  glob: q.json
+        #  loadContents: true
+        #  outputEval: $(JSON.parse(self[0].contents)['qid'])
+        source: "#get_backend_queue/qid"
         #valueFrom: "9614390"
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
