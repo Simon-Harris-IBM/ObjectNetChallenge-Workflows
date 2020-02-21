@@ -21,8 +21,8 @@ requirements:
           #!/usr/bin/env python
           #import synapseclient
           #import argparse
-          #import json
-          #import os
+          import json
+          import os
 
           import random
           #parser = argparse.ArgumentParser()
@@ -33,7 +33,10 @@ requirements:
           #syn.login()
           #sub = syn.getSubmission(args.submissionid, downloadLocation=".")
           qid = random.choice(["9614390","9614420"])
-          print("=> Sending to backend queue: ", q)
+          q_json = {'qid': qid}
+          with open('q.json', 'w') as o:
+            o.write(json.dumps(q_json))
+          print("=> Sending to backend queue: ", q_json)
 
 inputs:
   - id: submissionId
@@ -141,7 +144,12 @@ steps:
       - id: parentid
         source: "#submitterUploadSynId"
       - id: evaluationid
-        source: "#get_backend_queue.py/qid"
+        type: string
+        outputBinding:
+          glob: q.json
+          loadContents: true
+          outputEval: $(JSON.parse(self[0].contents)['qid'])
+        #source: "#get_backend_queue.py/qid"
         #valueFrom: "9614390"
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
