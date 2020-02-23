@@ -50,10 +50,17 @@ requirements:
           print("=> Sending to backend queue: ", q_json)
 
 outputs:
-  - id: qid
-    type: File
-    outputBinding:
-      # This tool depends on the submission.json to be named submission.json
-      glob: selected_queue.json
-      loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['qid'])
+- id: qid
+  type: string
+  outputBinding:
+    # This tool depends on the submission.json to be named submission.json
+    glob: q.json
+    loadContents: true
+    outputEval: $(JSON.parse(self[0].contents)['qid'])
+#  - id: qid
+#    type: File
+#    outputBinding:
+#      # This tool depends on the submission.json to be named submission.json
+#      glob: selected_queue.json
+#      loadContents: true
+#      outputEval: $(JSON.parse(self[0].contents)['qid'])
