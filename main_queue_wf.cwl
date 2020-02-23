@@ -75,7 +75,7 @@ steps:
     in:
       - id: synapse_config
         source: "#synapseConfig"
-    out: 
+    out:
       - id: docker_registry
       - id: docker_authentication
 
@@ -132,13 +132,14 @@ steps:
         source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
+  # Get the backend queue we're going to send this submission to.
   get_backend_queue:
     run: get_backend_queue.cwl
     in:
       - id: queueids
-        valueFrom: "9614390"
+        valueFrom: ["9614390", "9614420"]
     out:
-      - id: qid 
+      - id: qid
 
   submit_to_challenge:
     run: submit_to_challenge.cwl
@@ -152,11 +153,6 @@ steps:
       - id: parentid
         source: "#submitterUploadSynId"
       - id: evaluationid
-        #type: string
-        #outputBinding:
-        #  glob: q.json
-        #  loadContents: true
-        #  outputEval: $(JSON.parse(self[0].contents)['qid'])
         source: "#get_backend_queue/qid"
         #valueFrom: "9614390"
       - id: previous_annotation_finished
