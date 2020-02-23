@@ -36,8 +36,8 @@ requirements:
           args = parser.parse_args()
           # Just randomly select queue for now.
           # Need to implement at the very least a round robin technique.
-          #qid = random.choice(["9614390","9614420"])
-          qid = random.choice(queues)
+          qid = random.choice(["9614390","9614420"])
+          #qid = random.choice(queues)
           q_json = {'qid': qid}
           with open('q.json', 'w') as o:
             o.write(json.dumps(q_json))
