@@ -149,6 +149,7 @@ def main(syn, args):
                                               name=args.submissionid,
                                               network_disabled=True,
                                               mem_limit='10g', stderr=True,
+                                              shm_size=64G,
                                               runtime='nvidia')
         except docker.errors.APIError as err:
             remove_docker_container(args.submissionid)
