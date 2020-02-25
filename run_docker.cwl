@@ -59,4 +59,4 @@ outputs:
     type: File
     outputBinding:
       # If you updated run_docker.py then you need to update here
-      glob: output/predictions.txt
+      glob: output/predictions.csv
