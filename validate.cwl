@@ -50,9 +50,10 @@ requirements:
                   message = sub_file.read()
               invalid_reasons = []
               prediction_file_status = "VALIDATED"
-              if not message.startswith("test"):
-                  invalid_reasons.append("Submission must have test column")
-                  prediction_file_status = "INVALID"
+              # This is where the validation code should go
+              #if not message.startswith("test"):
+              #    invalid_reasons.append("Submission must have test column")
+              #    prediction_file_status = "INVALID"
           result = {'prediction_file_errors':"\n".join(invalid_reasons),'prediction_file_status':prediction_file_status}
           with open(args.results, 'w') as o:
               o.write(json.dumps(result))
