@@ -16,15 +16,17 @@ inputs:
     type: string
   - id: inputfile
     type: File?
+  - id: goldstandard
+    type: File
 
 arguments:
   - valueFrom: validate.py
   - valueFrom: $(inputs.inputfile)
-    prefix: -s
-  - valueFrom: results.json
-    prefix: -r
-  - valueFrom: $(inputs.entity_type)
-    prefix: -e
+    prefix: -f
+  - valueFrom: $(inputs.goldstandard)
+    prefix: -a
+  - valueFrom: result.json
+    prefix: -o
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -39,7 +41,7 @@ requirements:
           parser.add_argument("-r", "--results", required=True, help="validation results")
           parser.add_argument("-e", "--entity_type", required=True, help="synapse entity type downloaded")
           parser.add_argument("-s", "--submission_file", help="Submission File")
-
+          # NEW VALIDATION CODE HERE
           args = parser.parse_args()
           
           if args.submission_file is None:
