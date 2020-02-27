@@ -12,8 +12,8 @@ hints:
 
 inputs:
 
-  - id: entity_type
-    type: string
+  #- id: entity_type
+  #  type: string
   - id: inputfile
     type: File?
   - id: goldstandard
@@ -68,92 +68,93 @@ requirements:
           except:
               err_exit('Failed to parse command line')
 
-          if args.filename is None:
-              prediction_file_status = "INVALID"
-              invalid_reasons = ['Expected FileEntity type but found ' + args.entity_type]
-          else:
-              #with open(args.submission_file,"r") as sub_file:
-              #    message = sub_file.read()
-              #invalid_reasons = []
-              #prediction_file_status = "VALIDATED"
-              # This is where the validation code should go
-              #if not message.startswith("test"):
-              #    invalid_reasons.append("Submission must have test column")
-              #    prediction_file_status = "INVALID"
+          #if args.filename is None:
+          #    prediction_file_status = "INVALID"
+          #    invalid_reasons = ['Expected FileEntity type but found ' + args.entity_type]
+          #else:
+          #with open(args.submission_file,"r") as sub_file:
+          #    message = sub_file.read()
+          #invalid_reasons = []
+          #prediction_file_status = "VALIDATED"
+          # This is where the validation code should go
+          #if not message.startswith("test"):
+          #    invalid_reasons.append("Submission must have test column")
+          #    prediction_file_status = "INVALID"
 
-              # New validate & score code
-              #try:
-              #    args = parser.parse_args()
-              #except:
-              #    err_exit('Failed to parse command line')
+          # New validate & score code
+          #try:
+          #    args = parser.parse_args()
+          #except:
+          #    err_exit('Failed to parse command line')
 
-              try:
-                  with open(args.answers) as f:
-                      answers = json.load(f)
-                  total = len(answers)
-              except:
-                  err_exit('ObjectNet answer file not available')
+          args.answers = os.environ['GOLD_LABELS']
+          try:
+              with open(args.answers) as f:
+                  answers = json.load(f)
+              total = len(answers)
+          except:
+              err_exit('ObjectNet answer file not available')
 
-              try:
-                  f = open(args.filename)
-              except:
-                  err_exit('Unable to open results file: {}'.format(args.filename))
+          try:
+              f = open(args.filename)
+          except:
+              err_exit('Unable to open results file: {}'.format(args.filename))
 
-              try:
-                  reader = csv.reader(f)
-              except:
-                  err_exit('Unable to open results file as csv file: {}'.format(args.filename))
+          try:
+              reader = csv.reader(f)
+          except:
+              err_exit('Unable to open results file as csv file: {}'.format(args.filename))
 
-              try:
-                  linecnt = 0
-                  num_correct = 0
-                  num5_correct = 0
-                  found = set()
-                  for row in reader:
-                      try:
-                          filename = os.path.split(row[0])[1] # remove dir if necessary
-                      except:
-                          err_exit('Failure to convert first csv column to string')
-                      if filename not in answers:
-                          err_exit('Image name in first csv column not found in answer set')
-                      if filename in found:
-                          err_exit('Duplicate image name in result csv..rejecting')
-                      found.add(filename)
+          try:
+              linecnt = 0
+              num_correct = 0
+              num5_correct = 0
+              found = set()
+              for row in reader:
+                  try:
+                      filename = os.path.split(row[0])[1] # remove dir if necessary
+                  except:
+                      err_exit('Failure to convert first csv column to string')
+                  if filename not in answers:
+                      err_exit('Image name in first csv column not found in answer set')
+                  if filename in found:
+                      err_exit('Duplicate image name in result csv..rejecting')
+                  found.add(filename)
 
-                      correct = answers[filename]
-                      try:
-                          pred = []
-                          for x in row[1:6]:
-                              if x == '':   # allow empty predictions
-                                  pred.append(-1)
-                              else:
-                                  pred.append(int(x))
-                      except Exception as e:
-                          # not really happy about swallowing exception, how to dump it w/o the submitter seeing it??
-                          # print(e, file=sys.stderr)
-                          err_exit('Failure to convert predictions to integer indices')
-                      if args.range_check:
-                          for p in pred:
-                              if p < range_min or p > range_max:
-                                  err_exit('Prediction index <{}> out of range [{}, {}]'.format(p, range_min, range_max))
-                      if pred[0] == correct:
-                          num_correct += 1
-                      if correct in pred:
-                          num5_correct += 1
-                      linecnt += 1
-              except Exception as e:
-                  # not really happy about swallowing exception, how to dump it w/o the submitter seeing it??
-                  # print(e, file=sys.stderr)
-                  err_exit('Caught exception while parsing csv file: {}'.format(args.filename))
+                  correct = answers[filename]
+                  try:
+                      pred = []
+                      for x in row[1:6]:
+                          if x == '':   # allow empty predictions
+                              pred.append(-1)
+                          else:
+                              pred.append(int(x))
+                  except Exception as e:
+                      # not really happy about swallowing exception, how to dump it w/o the submitter seeing it??
+                      # print(e, file=sys.stderr)
+                      err_exit('Failure to convert predictions to integer indices')
+                  if args.range_check:
+                      for p in pred:
+                          if p < range_min or p > range_max:
+                              err_exit('Prediction index <{}> out of range [{}, {}]'.format(p, range_min, range_max))
+                  if pred[0] == correct:
+                      num_correct += 1
+                  if correct in pred:
+                      num5_correct += 1
+                  linecnt += 1
+          except Exception as e:
+              # not really happy about swallowing exception, how to dump it w/o the submitter seeing it??
+              # print(e, file=sys.stderr)
+              err_exit('Caught exception while parsing csv file: {}'.format(args.filename))
 
-              results = { 'accuracy': 100.0 * num_correct / total,
-                          'top5_accuracy': 100.0 * num5_correct / total,
-                          'images_scored': linecnt,
-                          'total_images': total }
-              rval.update(results)
-              rval['prediction_file_status'] = 'VALIDATED'
-              print(json.dumps(rval, indent=2, sort_keys=True))
-              sys.exit(0)
+          results = { 'accuracy': 100.0 * num_correct / total,
+                      'top5_accuracy': 100.0 * num5_correct / total,
+                      'images_scored': linecnt,
+                      'total_images': total }
+          rval.update(results)
+          rval['prediction_file_status'] = 'VALIDATED'
+          print(json.dumps(rval, indent=2, sort_keys=True))
+          sys.exit(0)
 
           #result = {'prediction_file_errors':"\n".join(invalid_reasons),'prediction_file_status':prediction_file_status}
           with open(args.results, 'w') as o:

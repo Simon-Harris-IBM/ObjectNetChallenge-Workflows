@@ -163,8 +163,8 @@ steps:
         source: "#run_docker/predictions"
       # Entity type isn't passed in because docker file prediction files are passed
       # From the docker run command
-      - id: entity_type
-        valueFrom: "none"
+      #- id: entity_type
+      #  valueFrom: "none"
       - id: goldstandard
         valueFrom: "/path/to/gold"
     out:
