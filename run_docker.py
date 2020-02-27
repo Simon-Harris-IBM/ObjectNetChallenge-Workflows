@@ -97,7 +97,9 @@ def main(syn, args):
     # Line 100 is important because CWL expects output in
     # output/....., this is why, because all the files your model are writing out
     # are writing to this directory on your instance.
-    output_dir = os.path.join(os.getcwd(), "output")
+    # Create output directory for each submission
+    #output_dir = os.path.join(os.getcwd(), "output")
+    output_dir = os.path.join("/output", args.submissionid)
     # Must make the directory or else it will be mounted into docker as a file
     os.mkdir(output_dir)
     input_dir = args.input_dir
