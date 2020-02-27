@@ -99,7 +99,7 @@ def main(syn, args):
     # are writing to this directory on your instance.
     # Create output directory for each submission
     #output_dir = os.path.join(os.getcwd(), "output")
-    output_dir = os.path.join("/output", args.submissionid)
+    output_dir = os.path.join("/ObjectNet-Output", args.submissionid)
     # Must make the directory or else it will be mounted into docker as a file
     os.mkdir(output_dir)
     input_dir = args.input_dir
