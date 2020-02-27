@@ -17,14 +17,14 @@ inputs:
   - id: inputfile
     type: File?
   - id: goldstandard
-    #type: File?
-    type: string
+    type: File
+    #type: string
 
 arguments:
   - valueFrom: validate_and_score.py
   - valueFrom: $(inputs.inputfile)
     prefix: -f
-  - valueFrom: $(inputs.goldstandard)
+  - valueFrom: $(inputs.goldstandard.path)
     prefix: -a
   - valueFrom: result.json
     prefix: -o
