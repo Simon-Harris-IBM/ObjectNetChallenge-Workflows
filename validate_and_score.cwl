@@ -17,7 +17,7 @@ inputs:
   - id: inputfile
     type: File?
   - id: goldstandard
-    type: string
+    type: File
 
 arguments:
   - valueFrom: validate_and_score.py
