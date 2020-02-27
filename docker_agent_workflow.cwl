@@ -165,8 +165,8 @@ steps:
       # From the docker run command
       #- id: entity_type
       #  valueFrom: "none"
-      - id: goldstandard
-        valueFrom: "/path/to/gold"
+      #- id: goldstandard
+      #  valueFrom: "/path/to/gold"
     out:
       - id: results
       - id: status
