@@ -166,10 +166,7 @@ steps:
       #- id: entity_type
       #  valueFrom: "none"
       - id: goldstandard
-        default:
-          class: File
-          location: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
-        #valueFrom: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
+        valueFrom: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
     out:
       - id: results
       - id: status
