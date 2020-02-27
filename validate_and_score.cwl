@@ -16,15 +16,15 @@ inputs:
   #  type: string
   - id: inputfile
     type: File?
-  #- id: goldstandard
-  #  type: File
+  - id: goldstandard
+    type: File
 
 arguments:
   - valueFrom: validate_and_score.py
   - valueFrom: $(inputs.inputfile)
     prefix: -f
-  #- valueFrom: $(inputs.goldstandard)
-  #  prefix: -a
+  - valueFrom: $(inputs.goldstandard)
+    prefix: -a
   - valueFrom: result.json
     prefix: -o
 
@@ -57,7 +57,7 @@ requirements:
 
           parser = argparse.ArgumentParser()
           parser.add_argument("-f", "--filename", required=True, help="users result file")
-          #parser.add_argument("-a", "--answers", required=True, help="ground truth/answer file")
+          parser.add_argument("-a", "--answers", required=True, help="ground truth/answer file")
           parser.add_argument("-r", "--range_check", action="store_true", help="reject entries that have out-of-range label indices")
           parser.add_argument("-o", "--output_file", help="Output JSON file")
           #parser.add_argument("-s", "--submission_file", help="Submission File")
@@ -88,7 +88,7 @@ requirements:
           #except:
           #    err_exit('Failed to parse command line')
 
-          args.answers = os.environ['GOLD_LABELS']
+          #args.answers = os.environ['GOLD_LABELS']
           try:
               with open(args.answers) as f:
                   answers = json.load(f)

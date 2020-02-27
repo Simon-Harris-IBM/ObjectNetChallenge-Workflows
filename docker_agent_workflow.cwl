@@ -45,7 +45,7 @@ steps:
     in:
       - id: synapse_config
         source: "#synapseConfig"
-    out: 
+    out:
       - id: docker_registry
       - id: docker_authentication
 
@@ -60,7 +60,7 @@ steps:
       - id: docker_repository
       - id: docker_digest
       #- id: entityid
-      # SH 
+      # SH
       - id: entity_id
       - id: results
 
@@ -165,13 +165,13 @@ steps:
       # From the docker run command
       #- id: entity_type
       #  valueFrom: "none"
-      #- id: goldstandard
-      #  valueFrom: "/path/to/gold"
+      - id: goldstandard
+        valueFrom: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
     out:
       - id: results
       - id: status
       - id: invalid_reasons
-  
+
   # We would need to write a different email tool
   validate_and_score_email:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_email.cwl
