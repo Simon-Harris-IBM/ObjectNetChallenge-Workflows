@@ -156,8 +156,8 @@ steps:
       #source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
-  validation:
-    run: validate.cwl
+  validate_and_score:
+    run: validate_and_score.cwl
     in:
       - id: inputfile
         source: "#run_docker/predictions"
@@ -165,12 +165,15 @@ steps:
       # From the docker run command
       - id: entity_type
         valueFrom: "none"
+      - id: goldstandard
+        valueFrom: "/path/to/gold"
     out:
       - id: results
       - id: status
       - id: invalid_reasons
   
-  validation_email:
+  # We would need to write a different email tool
+  validate_and_score_email:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_email.cwl
     in:
       - id: submissionid
@@ -178,18 +181,18 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: status
-        source: "#validation/status"
+        source: "#validate_and_score/status"
       - id: invalid_reasons
-        source: "#validation/invalid_reasons"
+        source: "#validate_and_score/invalid_reasons"
     out: [finished]
 
-  annotate_validation_with_output:
+  annotate_validate_and_score_with_output:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#validation/results"
+        source: "#validate_and_score/results"
       - id: to_public
         default: true
       - id: force_change_annotation_acl
@@ -204,50 +207,9 @@ steps:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/check_status.cwl
     in:
       - id: status
-        source: "#validation/status"
+        source: "#validate_and_score/status"
       - id: previous_annotation_finished
-        source: "#annotate_validation_with_output/finished"
+        source: "#annotate_validate_and_score_with_output/finished"
       - id: previous_email_finished
-        source: "#validation_email/finished"
+        source: "#validate_and_score_email/finished"
     out: [finished]
-
-#  scoring:
-#    run: score.cwl
-#    in:
-#      - id: inputfile
-#        source: "#run_docker/predictions"
-#      - id: goldstandard
-#        source: "#download_goldstandard/filepath"
-#      - id: check_validation_finished
-#        source: "#check_status/finished"
-#    out:
-#      - id: results
-      
-#  score_email:
-#    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/score_email.cwl
-#    in:
-#      - id: submissionid
-#        source: "#submissionId"
-#      - id: synapse_config
-#        source: "#synapseConfig"
-#      - id: results
-#        source: "#scoring/results"
-#    out: []
-
-#  annotate_submission_with_output:
-#    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
-#    in:
-#      - id: submissionid
-#        source: "#submissionId"
-#      - id: annotation_values
-#        source: "#scoring/results"
-#      - id: to_public
-#        default: true
-#      - id: force_change_annotation_acl
-#        default: true
-#      - id: synapse_config
-#        source: "#synapseConfig"
-#      - id: previous_annotation_finished
-#        source: "#annotate_validation_with_output/finished"
-#    out: [finished]
- 
