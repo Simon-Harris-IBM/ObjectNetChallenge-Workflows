@@ -24,6 +24,11 @@ inputs:
     type: string
   - id: synapseConfig
     type: File
+  - id: goldstandard
+    type: File
+    default:
+      class: File
+      location: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
@@ -166,7 +171,7 @@ steps:
       #- id: entity_type
       #  valueFrom: "none"
       - id: goldstandard
-        valueFrom: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
+        source: "#goldstandard"
     out:
       - id: results
       - id: status
