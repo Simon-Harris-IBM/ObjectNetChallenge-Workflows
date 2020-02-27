@@ -59,6 +59,7 @@ requirements:
           parser.add_argument("-f", "--filename", required=True, help="users result file")
           #parser.add_argument("-a", "--answers", required=True, help="ground truth/answer file")
           parser.add_argument("-r", "--range_check", action="store_true", help="reject entries that have out-of-range label indices")
+          parser.add_argument("-o", "--output_file", help="Output JSON file")
           #parser.add_argument("-s", "--submission_file", help="Submission File")
 
           # NEW VALIDATION CODE HERE
@@ -157,7 +158,7 @@ requirements:
           sys.exit(0)
 
           #result = {'prediction_file_errors':"\n".join(invalid_reasons),'prediction_file_status':prediction_file_status}
-          with open(args.results, 'w') as o:
+          with open(args.output_file, 'w') as o:
               o.write(json.dumps(rval))
 
 outputs:
