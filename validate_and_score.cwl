@@ -62,9 +62,9 @@ requirements:
           #args.answers = os.environ['GOLD_LABELS']
           # Run these commands to mount files into docker containers
           # docker run -v truth:/data/ --name helper busybox true
-          # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json truth:/data/answers_by_id.json
+          # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json helper:/data/answers_by_id.json
 
-          subprocess.check_call(["docker", "cp", "truth:/data/answers_by_id.json",
+          subprocess.check_call(["docker", "cp", "helper:/data/answers_by_id.json",
                                  "answers.json"])
 
           try:
