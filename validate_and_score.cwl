@@ -131,8 +131,9 @@ requirements:
           print(json.dumps(rval, indent=2, sort_keys=True))
 
           result = {'prediction_file_errors':"\n".join(rval['prediction_errors']),
-                    'prediction_file_status':rval['prediction_file_status'],
-                    'results': rval['results']}
+                    'prediction_file_status':rval['prediction_file_status']}
+          result.update(results)
+          
           with open(args.output_file, 'w') as o:
               o.write(json.dumps(result))
 
