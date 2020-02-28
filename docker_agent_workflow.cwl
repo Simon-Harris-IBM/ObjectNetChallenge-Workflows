@@ -24,11 +24,6 @@ inputs:
     type: string
   - id: synapseConfig
     type: File
-  - id: goldstandard
-    type: File
-    default:
-      class: File
-      location: "./ObjectNet-CONFIDENTIAL/answers_by_id.json"
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
@@ -68,17 +63,6 @@ steps:
       # SH
       - id: entity_id
       - id: results
-
-#  download_goldstandard:
-#    run: https://raw.githubusercontent.com/Sage-Bionetworks/synapse-client-cwl-tools/v0.1/synapse-get-tool.cwl
-#    in:
-#      - id: synapseid
-#        #This is a dummy syn id, replace when you use your own workflow
-#        valueFrom: "syn18081597"
-#      - id: synapse_config
-#        source: "#synapseConfig"
-#    out:
-#      - id: filepath
 
   annotate_submission_main_userid:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
@@ -166,13 +150,6 @@ steps:
     in:
       - id: inputfile
         source: "#run_docker/predictions"
-      # Entity type isn't passed in because docker file prediction files are passed
-      # From the docker run command
-      #- id: entity_type
-      #  valueFrom: "none"
-      - id: goldstandard
-        source: "#goldstandard"
-        #valueFrom: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
     out:
       - id: results
       - id: status

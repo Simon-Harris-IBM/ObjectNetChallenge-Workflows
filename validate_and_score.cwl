@@ -6,25 +6,15 @@ cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: python
 
-hints:
-  DockerRequirement:
-    dockerPull: python:3.7
-
 inputs:
 
-  #- id: entity_type
-  #  type: string
   - id: inputfile
     type: File?
-  - id: goldstandard
-    type: File
 
 arguments:
   - valueFrom: validate_and_score.py
   - valueFrom: $(inputs.inputfile)
     prefix: -f
-  - valueFrom: $(inputs.goldstandard.path)
-    prefix: -a
   - valueFrom: result.json
     prefix: -o
 
@@ -42,6 +32,7 @@ requirements:
           import csv
           import json
           import argparse
+          import subprocess
 
           # currently hardcoding this for ObjectNet ids
           range_min = -1   # oid starts at 0, treat -1 as a valid noop value
@@ -57,7 +48,6 @@ requirements:
 
           parser = argparse.ArgumentParser()
           parser.add_argument("-f", "--filename", required=True, help="users result file")
-          parser.add_argument("-a", "--answers", required=True, help="ground truth/answer file")
           parser.add_argument("-r", "--range_check", action="store_true", help="reject entries that have out-of-range label indices")
           parser.add_argument("-o", "--output_file", help="Output JSON file")
           #parser.add_argument("-s", "--submission_file", help="Submission File")
@@ -69,28 +59,16 @@ requirements:
           except:
               err_exit('Failed to parse command line')
 
-          #if args.filename is None:
-          #    prediction_file_status = "INVALID"
-          #    invalid_reasons = ['Expected FileEntity type but found ' + args.entity_type]
-          #else:
-          #with open(args.submission_file,"r") as sub_file:
-          #    message = sub_file.read()
-          #invalid_reasons = []
-          #prediction_file_status = "VALIDATED"
-          # This is where the validation code should go
-          #if not message.startswith("test"):
-          #    invalid_reasons.append("Submission must have test column")
-          #    prediction_file_status = "INVALID"
-
-          # New validate & score code
-          #try:
-          #    args = parser.parse_args()
-          #except:
-          #    err_exit('Failed to parse command line')
-
           #args.answers = os.environ['GOLD_LABELS']
+          # Run these commands to mount files into docker containers
+          # docker run -v truth:/data/ --name helper busybox true
+          # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json truth:/data/answers_by_id.json
+
+          subprocess.check_call(["docker", "cp", "truth:/data/answers_by_id.json",
+                                 "answers.json"])
+
           try:
-              with open(args.answers) as f:
+              with open("answers.json") as f:
                   answers = json.load(f)
               total = len(answers)
           except:
