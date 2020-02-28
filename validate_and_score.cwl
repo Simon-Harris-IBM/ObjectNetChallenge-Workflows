@@ -32,6 +32,7 @@ requirements:
           import csv
           import json
           import argparse
+          import subprocess
 
           # currently hardcoding this for ObjectNet ids
           range_min = -1   # oid starts at 0, treat -1 as a valid noop value
