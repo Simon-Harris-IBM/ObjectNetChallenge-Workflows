@@ -15,7 +15,7 @@ arguments:
   - valueFrom: validate_and_score.py
   - valueFrom: $(inputs.inputfile)
     prefix: -f
-  - valueFrom: result.json
+  - valueFrom: results.json
     prefix: -o
 
 requirements:
