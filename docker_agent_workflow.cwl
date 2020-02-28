@@ -28,7 +28,7 @@ inputs:
     type: File
     default:
       class: File
-      location: "/ObjectNet-CONFIDENTIAL/.answers_by_id.json"
+      location: "/ObjectNet-CONFIDENTIAL/answers_by_id.json"
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
