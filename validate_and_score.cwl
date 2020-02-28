@@ -50,16 +50,12 @@ requirements:
           parser.add_argument("-f", "--filename", required=True, help="users result file")
           parser.add_argument("-r", "--range_check", action="store_true", help="reject entries that have out-of-range label indices")
           parser.add_argument("-o", "--output_file", help="Output JSON file")
-          #parser.add_argument("-s", "--submission_file", help="Submission File")
 
-          # NEW VALIDATION CODE HERE
-          #args = parser.parse_args()
           try:
               args = parser.parse_args()
           except:
               err_exit('Failed to parse command line')
 
-          #args.answers = os.environ['GOLD_LABELS']
           # Run these commands to mount files into docker containers
           # docker run -v truth:/data/ --name helper busybox true
           # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json helper:/data/answers_by_id.json
@@ -133,10 +129,10 @@ requirements:
           rval.update(results)
           rval['prediction_file_status'] = 'VALIDATED'
           print(json.dumps(rval, indent=2, sort_keys=True))
-          #sys.exit(0)
 
           result = {'prediction_file_errors':"\n".join(rval['prediction_errors']),
-                    'prediction_file_status':rval['prediction_file_status']}
+                    'prediction_file_status':rval['prediction_file_status'],
+                    'results': rval['results']}
           with open(args.output_file, 'w') as o:
               o.write(json.dumps(result))
 
