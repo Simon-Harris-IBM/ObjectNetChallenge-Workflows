@@ -39,10 +39,10 @@ requirements:
           range_max = 312
 
           rval = { 'prediction_file_status': 'INVALID',
-                   'prediction_file_errors': [] }
+                   'prediction_errors': [] }
 
           def err_exit(err_msg):
-              rval['prediction_file_errors'].append(err_msg)
+              rval['prediction_errors'].append(err_msg)
               print(json.dumps(rval, indent=2, sort_keys=True))
               sys.exit(1)
 
@@ -135,9 +135,10 @@ requirements:
           print(json.dumps(rval, indent=2, sort_keys=True))
           #sys.exit(0)
 
-          #result = {'prediction_file_errors':"\n".join(invalid_reasons),'prediction_file_status':prediction_file_status}
+          result = {'prediction_file_errors':"\n".join(rval['prediction_errors']),
+                    'prediction_file_status':rval['prediction_file_status']}
           with open(args.output_file, 'w') as o:
-              o.write(json.dumps(rval))
+              o.write(json.dumps(result))
 
 outputs:
 
