@@ -133,7 +133,7 @@ requirements:
           rval.update(results)
           rval['prediction_file_status'] = 'VALIDATED'
           print(json.dumps(rval, indent=2, sort_keys=True))
-          sys.exit(0)
+          #sys.exit(0)
 
           #result = {'prediction_file_errors':"\n".join(invalid_reasons),'prediction_file_status':prediction_file_status}
           with open(args.output_file, 'w') as o:
