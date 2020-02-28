@@ -156,7 +156,7 @@ steps:
       - id: invalid_reasons
 
   # Upload the validated scores so we have a record
-  upload_results:
+  upload_validation:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/upload_to_synapse.cwl
     in:
       - id: infile
