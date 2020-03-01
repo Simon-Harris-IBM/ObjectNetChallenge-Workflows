@@ -168,6 +168,25 @@ steps:
       - id: status
       - id: invalid_reasons
 
+  # Upload the validated scores so we have a record
+  upload_validation:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/upload_to_synapse.cwl
+    in:
+      - id: infile
+        source: "#validate_and_score/results"
+      - id: parentid
+        source: "#adminUploadSynId"
+      - id: used_entity
+        source: "#get_docker_submission/entity_id"
+      - id: executed_entity
+        source: "#workflowSynapseId"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: uploaded_fileid
+      - id: uploaded_file_version
+      - id: results
+
   # We would need to write a different email tool
   validate_and_score_email:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_email.cwl

@@ -15,7 +15,7 @@ arguments:
   - valueFrom: validate_and_score.py
   - valueFrom: $(inputs.inputfile)
     prefix: -f
-  - valueFrom: result.json
+  - valueFrom: results.json
     prefix: -o
 
 requirements:
@@ -39,10 +39,10 @@ requirements:
           range_max = 312
 
           rval = { 'prediction_file_status': 'INVALID',
-                   'prediction_file_errors': [] }
+                   'prediction_errors': [] }
 
           def err_exit(err_msg):
-              rval['prediction_file_errors'].append(err_msg)
+              rval['prediction_errors'].append(err_msg)
               print(json.dumps(rval, indent=2, sort_keys=True))
               sys.exit(1)
 
@@ -50,21 +50,17 @@ requirements:
           parser.add_argument("-f", "--filename", required=True, help="users result file")
           parser.add_argument("-r", "--range_check", action="store_true", help="reject entries that have out-of-range label indices")
           parser.add_argument("-o", "--output_file", help="Output JSON file")
-          #parser.add_argument("-s", "--submission_file", help="Submission File")
 
-          # NEW VALIDATION CODE HERE
-          #args = parser.parse_args()
           try:
               args = parser.parse_args()
           except:
               err_exit('Failed to parse command line')
 
-          #args.answers = os.environ['GOLD_LABELS']
           # Run these commands to mount files into docker containers
           # docker run -v truth:/data/ --name helper busybox true
-          # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json truth:/data/answers_by_id.json
+          # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json helper:/data/answers_by_id.json
 
-          subprocess.check_call(["docker", "cp", "truth:/data/answers_by_id.json",
+          subprocess.check_call(["docker", "cp", "helper:/data/answers_by_id.json",
                                  "answers.json"])
 
           try:
@@ -133,11 +129,13 @@ requirements:
           rval.update(results)
           rval['prediction_file_status'] = 'VALIDATED'
           print(json.dumps(rval, indent=2, sort_keys=True))
-          sys.exit(0)
 
-          #result = {'prediction_file_errors':"\n".join(invalid_reasons),'prediction_file_status':prediction_file_status}
+          result = {'prediction_file_errors':"\n".join(rval['prediction_errors']),
+                    'prediction_file_status':rval['prediction_file_status']}
+          result.update(results)
+          
           with open(args.output_file, 'w') as o:
-              o.write(json.dumps(rval))
+              o.write(json.dumps(result))
 
 outputs:
 
