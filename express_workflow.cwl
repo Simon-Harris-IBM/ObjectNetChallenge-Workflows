@@ -67,17 +67,6 @@ steps:
       - id: docker_registry
       - id: docker_authentication
 
-#  download_goldstandard:
-#    run: https://raw.githubusercontent.com/Sage-Bionetworks/synapse-client-cwl-tools/v0.1/synapse-get-tool.cwl
-#    in:
-#      - id: synapseid
-#        #This is a dummy syn id, replace when you use your own workflow
-#        valueFrom: "syn18081597"
-#      - id: synapse_config
-#        source: "#synapseConfig"
-#    out:
-#      - id: filepath
-
   validate_docker:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_docker.cwl
     in:
@@ -186,7 +175,7 @@ steps:
       - id: invalid_reasons
   
   validation_email:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_email.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/validate_email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -196,6 +185,8 @@ steps:
         source: "#validation/status"
       - id: invalid_reasons
         source: "#validation/invalid_reasons"
+      - id: errors_only
+        default: true
     out: [finished]
 
   annotate_validation_with_output:
