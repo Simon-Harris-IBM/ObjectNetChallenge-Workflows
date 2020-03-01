@@ -30,6 +30,19 @@ outputs: []
 
 steps:
 
+  set_permissions:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/set_permissions.cwl
+    in:
+      - id: entityid
+        source: "#submitterUploadSynId"
+      - id: principalid
+        valueFrom: "3401248"
+      - id: permissions
+        valueFrom: "download"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out: []
+
   get_docker_submission:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/get_submission.cwl
     in:
@@ -53,17 +66,6 @@ steps:
     out:
       - id: docker_registry
       - id: docker_authentication
-
-#  download_goldstandard:
-#    run: https://raw.githubusercontent.com/Sage-Bionetworks/synapse-client-cwl-tools/v0.1/synapse-get-tool.cwl
-#    in:
-#      - id: synapseid
-#        #This is a dummy syn id, replace when you use your own workflow
-#        valueFrom: "syn18081597"
-#      - id: synapse_config
-#        source: "#synapseConfig"
-#    out:
-#      - id: filepath
 
   validate_docker:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_docker.cwl
@@ -100,10 +102,6 @@ steps:
       - id: status
         source: "#validate_docker/status"
       - id: previous_annotation_finished
-        #source: "#annotate_validation_with_output/finished"
-        source: "#annotate_docker_validation_with_output/finished"
-      - id: previous_email_finished
-        #source: "#validation_email/finished"
         source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
@@ -129,9 +127,6 @@ steps:
         source: "#submitterUploadSynId"
       - id: evaluationid
         source: "#get_backend_queue/qid"
-        #valueFrom: "9614390"
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
-#      - id: previous_email_finished
-#        source: "#validation_email/finished"
     out: []
