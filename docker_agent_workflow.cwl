@@ -187,9 +187,8 @@ steps:
       - id: uploaded_file_version
       - id: results
 
-  # We would need to write a different email tool
   validate_and_score_email:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/validate_email.cwl
+    run: email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -199,6 +198,8 @@ steps:
         source: "#validate_and_score/status"
       - id: invalid_reasons
         source: "#validate_and_score/invalid_reasons"
+      - id: results
+        source: "#validate_and_score/results"
     out: [finished]
 
   annotate_validate_and_score_with_output:
