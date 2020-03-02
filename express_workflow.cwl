@@ -117,7 +117,7 @@ steps:
         source: "#synapseConfig"
       - id: input_dir
         # Replace this with correct datapath
-        valueFrom: "/ObjectNet/eval-q"
+        valueFrom: "/large/images/100-images"
       - id: docker_script
         default:
           class: File
