@@ -51,7 +51,7 @@ requirements:
                         'prediction_file_status':rval['prediction_file_status']}
               print(json.dumps(errresult, indent=2, sort_keys=True))
               write_result_json(args.output_file, errresult)
-              sys.exit(1)
+              sys.exit(0)
 
           parser = argparse.ArgumentParser()
           parser.add_argument("-f", "--filename", required=True, help="users result file")
