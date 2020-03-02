@@ -55,7 +55,7 @@ requirements:
 
           parser = argparse.ArgumentParser()
           parser.add_argument("-f", "--filename", required=True, help="users result file")
-          parser.add_argument("-r", "--range_check", action="store_true", default=False, help="reject entries that have out-of-range label indices")
+          parser.add_argument("-r", "--range_check", action="store_true",default=False, help="reject entries that have out-of-range label indices")
           parser.add_argument("-o", "--output_file", help="Output JSON file")
 
           try:
