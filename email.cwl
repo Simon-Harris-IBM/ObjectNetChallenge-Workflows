@@ -68,7 +68,7 @@ requirements:
 
           if args.status == "INVALID":
             subject = "Submission to '%s' invalid!" % evaluation.name
-            message = ["Hello %s,\n\n" % syn.getUserProfile(userid)['userName'],
+            message = ["Hello %s,\n\n" % syn.getUserProfile(sub.userId)['userName'],
                        "Your submission (%s) is invalid, below are the invalid reasons:\n\n" % sub.name,
                        args.invalid,
                        "\n\nSincerely,\nChallenge Administrator"]
