@@ -113,7 +113,7 @@ steps:
         source: "#synapseConfig"
       - id: input_dir
         # Replace this with correct datapath
-        valueFrom: "/large/images"
+        valueFrom: "/large/images/main-images"
       - id: docker_script
         default:
           class: File
