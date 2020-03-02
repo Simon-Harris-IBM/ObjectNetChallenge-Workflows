@@ -41,9 +41,14 @@ requirements:
           rval = { 'prediction_file_status': 'INVALID',
                    'prediction_errors': [] }
 
+          def write_result_json(outfile, res):
+              with open(outputfile, 'w') as o:
+                  o.write(json.dumps(res))
+
           def err_exit(err_msg):
               rval['prediction_errors'].append(err_msg)
               print(json.dumps(rval, indent=2, sort_keys=True))
+              write_result(args.output_file, rval)
               sys.exit(1)
 
           parser = argparse.ArgumentParser()
@@ -134,8 +139,9 @@ requirements:
                     'prediction_file_status':rval['prediction_file_status']}
           result.update(results)
           
-          with open(args.output_file, 'w') as o:
-              o.write(json.dumps(result))
+          #with open(args.output_file, 'w') as o:
+          #    o.write(json.dumps(result))
+          write_result(args.output_file, result)
 
 outputs:
 
