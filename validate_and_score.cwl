@@ -42,7 +42,7 @@ requirements:
                    'prediction_errors': [] }
 
           def write_result_json(outfile, res):
-              with open(outputfile, 'w') as o:
+              with open(outfile, 'w') as o:
                   o.write(json.dumps(res))
 
           def err_exit(err_msg):
