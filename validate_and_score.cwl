@@ -106,7 +106,8 @@ requirements:
                   correct = answers[filename]
                   try:
                       pred = []
-                      for x in row[1:6]:
+                      #for x in row[1:6]:
+                      for x in row[1:10:2]:
                           if x == '':   # allow empty predictions
                               pred.append(-1)
                           else:
