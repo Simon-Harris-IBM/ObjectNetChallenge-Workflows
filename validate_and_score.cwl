@@ -48,7 +48,7 @@ requirements:
           def err_exit(err_msg):
               rval['prediction_errors'].append(err_msg)
               print(json.dumps(rval, indent=2, sort_keys=True))
-              write_result(args.output_file, rval)
+              write_result_json(args.output_file, rval)
               sys.exit(1)
 
           parser = argparse.ArgumentParser()
@@ -141,7 +141,7 @@ requirements:
           
           #with open(args.output_file, 'w') as o:
           #    o.write(json.dumps(result))
-          write_result(args.output_file, result)
+          write_result_json(args.output_file, result)
 
 outputs:
 
