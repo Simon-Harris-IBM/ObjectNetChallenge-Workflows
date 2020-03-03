@@ -58,17 +58,18 @@ requirements:
           syn.login()
 
           sub = syn.getSubmission(args.submissionid)
-          participantid = sub.get("teamId")
-          if participantid is not None:
+          status = syn.getSubmissionStatus(args.submissionid)
+          result = filter(lambda x: x['key'] == "main_submitterId", status.annotations['stringAnnos'])
+          participantid = list(result)[0]['value']
+          try:
             name = syn.getTeam(participantid)['name']
-          else:
-            participantid = sub.userId
+          except Exception:
             name = syn.getUserProfile(participantid)['userName']
           evaluation = syn.getEvaluation(sub.evaluationId)
 
           if args.status == "INVALID":
             subject = "Submission to '%s' invalid!" % evaluation.name
-            message = ["Hello %s,\n\n" % syn.getUserProfile(sub.userId)['userName'],
+            message = ["Hello %s,\n\n" % name,
                        "Your submission (%s) is invalid, below are the invalid reasons:\n\n" % sub.name,
                        args.invalid,
                        "\n\nSincerely,\nChallenge Administrator"]
