@@ -10,6 +10,8 @@ inputs:
 
   - id: inputfile
     type: File?
+  - id: test
+    type: boolean?
 
 arguments:
   - valueFrom: validate_and_score.py
@@ -17,6 +19,8 @@ arguments:
     prefix: -f
   - valueFrom: results.json
     prefix: -o
+  - valueFrom: $(inputs.test)
+    prefix: -t
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -57,6 +61,7 @@ requirements:
           parser.add_argument("-f", "--filename", required=True, help="users result file")
           parser.add_argument("-r", "--range_check", action="store_true",default=False, help="reject entries that have out-of-range label indices")
           parser.add_argument("-o", "--output_file", help="Output JSON file")
+          parser.add_argument("-t", "--test", default=False)
 
           try:
               args = parser.parse_args()
@@ -66,9 +71,12 @@ requirements:
           # Run these commands to mount files into docker containers
           # docker run -v truth:/data/ --name helper busybox true
           # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json helper:/data/answers_by_id.json
-
-          subprocess.check_call(["docker", "cp", "helper:/data/answers_by_id.json",
-                                 "answers.json"])
+          if not test:
+              subprocess.check_call(["docker", "cp", "helper:/data/answers_by_id.json",
+                                    "answers.json"])
+          else:
+              subprocess.check_call(["docker", "cp", "helper:/data/answers-100-images.json",
+                                    "answers.json"])
 
           try:
               with open("answers.json") as f:

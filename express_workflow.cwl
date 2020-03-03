@@ -160,15 +160,27 @@ steps:
         source: "#annotate_docker_validation_with_output/finished"
     out: [finished]
 
+#  validation:
+#    run: validate.cwl
+#    in:
+#      - id: inputfile
+#        source: "#run_docker/predictions"
+#      # Entity type isn't passed in because docker file prediction files are passed
+#      # From the docker run command
+#      - id: entity_type
+#        valueFrom: "none"
+#    out:
+#      - id: results
+#      - id: status
+#      - id: invalid_reasons
+
   validation:
-    run: validate.cwl
+    run: validate_and_score.cwl
     in:
       - id: inputfile
         source: "#run_docker/predictions"
-      # Entity type isn't passed in because docker file prediction files are passed
-      # From the docker run command
-      - id: entity_type
-        valueFrom: "none"
+      - id: test 
+        default: true
     out:
       - id: results
       - id: status
