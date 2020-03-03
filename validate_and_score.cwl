@@ -71,7 +71,7 @@ requirements:
           # Run these commands to mount files into docker containers
           # docker run -v truth:/data/ --name helper busybox true
           # docker cp /ObjectNet-CONFIDENTIAL/answers_by_id.json helper:/data/answers_by_id.json
-          if not test:
+          if not args.test:
               subprocess.check_call(["docker", "cp", "helper:/data/answers_by_id.json",
                                     "answers.json"])
           else:
