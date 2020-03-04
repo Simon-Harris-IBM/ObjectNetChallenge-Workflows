@@ -53,6 +53,19 @@ steps:
     out:
       - id: submissionid
 
+  notify:
+    run: notify_email.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: fanoutid
+        source: "#get_submissionid/submissionid"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: parentid
+        source: "#submitterUploadSynId"
+    out: [finished]
+
   get_docker_config:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/get_docker_config.cwl
     in:
