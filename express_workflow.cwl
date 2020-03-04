@@ -191,7 +191,7 @@ steps:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/upload_to_synapse.cwl
     in:
       - id: infile
-        source: "#validate_and_score/results"
+        source: "#validation/results"
       - id: parentid
         source: "#adminUploadSynId"
       - id: used_entity
