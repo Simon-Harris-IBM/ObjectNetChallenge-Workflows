@@ -5,16 +5,24 @@
 #
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: python
+baseCommand: python3
+
+hints:
+  DockerRequirement:
+    dockerPull: sagebionetworks/synapsepythonclient:v1.9.2
 
 inputs:
   - id: queueids
     type: string[]
+  - id: synapse_config
+    type: File
 
 arguments:
   - valueFrom: get_backend_queue.py
   - valueFrom: $(inputs.queueids)
     prefix: -q
+  - valueFrom: $(inputs.synapse_config.path)
+    prefix: -c
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -27,16 +35,33 @@ requirements:
           import json
           import os
           import random
+          import time
+
+          import synapseclient
 
           # It appears a workflow requires at least one argument so
           # keep the following lines either though we don't use
           # the argument.
           parser = argparse.ArgumentParser()
           parser.add_argument("-q", "--queues", required=True, help="List of queues", nargs='+')
+          parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
           args = parser.parse_args()
-          # Just randomly select queue for now.
-          # Need to implement at the very least a round robin technique.
-          qid = random.choice(args.queues)
+          syn = synapseclient.Synapse(configPath=args.synapse_config)
+          syn.login()
+
+          free_queues = []
+          # Append to free queues when a free queue opens up
+          # If free queues list is empty, continually look for free queues
+          while not free_queues:
+            time.sleep(30)
+            for queue in args.queues:
+              # list submissions that are evaluation in progress
+              evaluating_submissions = list(syn.getSubmissionBundles(queue, status="EVALUATION_IN_PROGRESS"))
+              if not evaluation_submissions:
+                free_queues.append(queue)
+
+          # Randomly select free queue
+          qid = random.choice(free_queues)
           #qid = random.choice(queues)
           q_json = {'qid': qid}
           with open('q.json', 'w') as o:
