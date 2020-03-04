@@ -108,7 +108,8 @@ steps:
       - id: status
         valueFrom: "VALIDATED"
       - id: parentid
-        source: "#submitterUploadSynId"
+        #source: "#submitterUploadSynId"
+        source: "#adminUploadSynId"
       - id: synapse_config
         source: "#synapseConfig"
       - id: input_dir
@@ -127,7 +128,8 @@ steps:
       - id: infile
         source: "#run_docker/predictions"
       - id: parentid
-        source: "#adminUploadSynId"
+        #source: "#adminUploadSynId"
+        source: "#submitterUploadSynId"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
       - id: executed_entity
@@ -175,7 +177,8 @@ steps:
       - id: infile
         source: "#validate_and_score/results"
       - id: parentid
-        source: "#adminUploadSynId"
+        #source: "#adminUploadSynId"
+        source: "#submitterUploadSynId"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
       - id: executed_entity
