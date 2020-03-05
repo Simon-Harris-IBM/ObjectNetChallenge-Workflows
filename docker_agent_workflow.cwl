@@ -141,8 +141,8 @@ steps:
       - id: infile
         source: "#run_docker/predictions"
       - id: parentid
-        #source: "#adminUploadSynId"
-        source: "#submitterUploadSynId"
+        source: "#adminUploadSynId"
+        #source: "#submitterUploadSynId"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
       - id: executed_entity
