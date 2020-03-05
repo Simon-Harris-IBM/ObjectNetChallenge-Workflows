@@ -53,6 +53,21 @@ steps:
     out:
       - id: submissionid
 
+  get_docker_submission:
+    run: get_submission_docker.cwl
+    in:
+      - id: submissionid
+        source: "#get_submissionid/submissionid"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: docker_repository
+      - id: docker_digest
+      - id: entity_id
+      - id: results
+      - id: admin_synid
+      - id: submitter_synid
+
   notify:
     run: notify_email.cwl
     in:
@@ -63,7 +78,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: parentid
-        source: "#submitterUploadSynId"
+        source: "#get_docker_submission/submitter_synid"
     out: [finished]
 
   get_docker_config:
@@ -75,20 +90,6 @@ steps:
       - id: docker_registry
       - id: docker_authentication
 
-  get_docker_submission:
-    run: get_submission_docker.cwl
-    in:
-      - id: submissionid
-        source: "#get_submissionid/submissionid"
-      - id: synapse_config
-        source: "#synapseConfig"
-    out:
-      - id: docker_repository
-      - id: docker_digest
-      #- id: entityid
-      # SH
-      - id: entity_id
-      - id: results
 
   annotate_submission_main_userid:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
@@ -122,7 +123,7 @@ steps:
         valueFrom: "VALIDATED"
       - id: parentid
         #source: "#submitterUploadSynId"
-        source: "#adminUploadSynId"
+        source: "#get_docker_submission/admin_synid"
       - id: synapse_config
         source: "#synapseConfig"
       - id: input_dir
@@ -141,7 +142,7 @@ steps:
       - id: infile
         source: "#run_docker/predictions"
       - id: parentid
-        source: "#adminUploadSynId"
+        source: "#get_docker_submission/admin_synid"
         #source: "#submitterUploadSynId"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
@@ -191,7 +192,7 @@ steps:
         source: "#validate_and_score/results"
       - id: parentid
         #source: "#adminUploadSynId"
-        source: "#submitterUploadSynId"
+        source: "#get_docker_submission/submitter_synid"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
       - id: executed_entity

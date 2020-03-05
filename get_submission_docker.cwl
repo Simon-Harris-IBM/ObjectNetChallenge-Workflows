@@ -1,6 +1,7 @@
 #!/usr/bin/env cwl-runner
 #
 # Extract the submitted Docker repository and Docker digest
+# And submitterSynid and adminUploadSynId
 #
 cwlVersion: v1.0
 class: CommandLineTool
@@ -43,10 +44,21 @@ requirements:
           syn = synapseclient.Synapse(configPath=args.synapse_config)
           syn.login()
           sub = syn.getSubmission(args.submissionid, downloadLocation=".")
+
           if sub.entity.concreteType!='org.sagebionetworks.repo.model.docker.DockerRepository':
             raise Exception('Expected DockerRepository type but found '+sub.entity.concreteType)
-          result = {'docker_repository':sub.get("dockerRepositoryName",""),'docker_digest':sub.get("dockerDigest",""),'entityid':sub.entity.id}
-          
+          result = {'docker_repository': sub.get("dockerRepositoryName",""),
+                    'docker_digest': sub.get("dockerDigest",""),
+                    'entityid': sub.entity.id}
+          status = syn.getSubmissionStatus(args.submissionid)
+          get_values = filter(lambda x: x.get('key') in ['admin_synid', 'orgSagebionetworksSynapseWorkflowOrchestratorSubmissionFolder'], 
+                              status.annotations['stringAnnos'])
+          add_values = {value['key']: value['value'] for value in get_values}
+          # Just for testing purposes - if all the steps work, this annotations
+          # should exist
+          if add_values.get("admin_synid") is None:
+            add_values['admin_synid'] = ''
+          result.update(add_values)
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
 
@@ -68,14 +80,24 @@ outputs:
       glob: results.json
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['docker_digest'])
-  # *SH
-  #- id: entityid
   - id: entity_id
     type: string
     outputBinding:
       glob: results.json
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['entityid'])
+  - id: admin_synid
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['admin_synid'])
+  - id: submitter_synid
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['orgSagebionetworksSynapseWorkflowOrchestratorSubmissionFolder'])
   - id: results
     type: File
     outputBinding:
