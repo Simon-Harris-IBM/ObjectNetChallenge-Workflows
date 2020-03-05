@@ -34,7 +34,7 @@ steps:
     in:
       - id: admin_synid
         source: "#adminUploadSynId"
-    out [json_out]
+    out: [json_out]
 
   annotate_adminsynid:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/annotate_submission.cwl
