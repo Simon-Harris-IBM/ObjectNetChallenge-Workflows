@@ -30,7 +30,7 @@ outputs: []
 
 steps:
   create_adminsynid_json:
-    run: create_adminsynid_annotations.cwl
+    run: create_adminsynid_annotation.cwl
     in:
       - id: admin_synid
         source: "#adminUploadSynId"
