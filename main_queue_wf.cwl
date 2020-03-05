@@ -111,6 +111,8 @@ steps:
     in:
       - id: queueids
         default: ["9614426","9614427"]
+      - id: synapse_config
+        source: "#synapseConfig"
     out:
       - id: qid
 
