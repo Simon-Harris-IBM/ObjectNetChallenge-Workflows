@@ -159,7 +159,7 @@ steps:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
     in:
       - id: submissionid
-        source: "#submissionId"
+        source: "#get_submissionid/submissionId"
       - id: annotation_values
         source: "#upload_results/results"
       - id: to_public
@@ -223,7 +223,7 @@ steps:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
     in:
       - id: submissionid
-        source: "#submissionId"
+        source: "#get_submissionid/submissionId"
       - id: annotation_values
         source: "#validate_and_score/results"
       - id: to_public
