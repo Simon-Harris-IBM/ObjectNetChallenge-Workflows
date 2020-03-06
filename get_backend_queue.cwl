@@ -57,7 +57,7 @@ requirements:
             for queue in args.queues:
               # list submissions that are evaluation in progress
               evaluating_submissions = list(syn.getSubmissionBundles(queue, status="EVALUATION_IN_PROGRESS"))
-              if not evaluation_submissions:
+              if not evaluating_submissions:
                 free_queues.append(queue)
 
           # Randomly select free queue
