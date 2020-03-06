@@ -53,13 +53,13 @@ requirements:
           # Append to free queues when a free queue opens up
           # If free queues list is empty, continually look for free queues
           while not free_queues:
-            time.sleep(30)
             for queue in args.queues:
               # list submissions that are evaluation in progress
               evaluating_submissions = list(syn.getSubmissionBundles(queue, status="EVALUATION_IN_PROGRESS"))
               if not evaluating_submissions:
                 free_queues.append(queue)
-
+            if not free_queues:
+              time.sleep(30)
           # Randomly select free queue
           qid = random.choice(free_queues)
           #qid = random.choice(queues)
