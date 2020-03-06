@@ -147,7 +147,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: parentid
-        source: "#submitterUploadSynId"
+        source: "#adminUploadSynId"
       - id: evaluationid
         source: "#get_backend_queue/qid"
       - id: previous_annotation_finished
