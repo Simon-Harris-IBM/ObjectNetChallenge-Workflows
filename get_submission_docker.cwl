@@ -91,7 +91,7 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['admin_synid'])
+      outputEval: $(JSON.parse(self[0].contents)['admin_folder'])
   - id: submitter_synid
     type: string
     outputBinding:
