@@ -63,7 +63,7 @@ requirements:
           evaluation = syn.getEvaluation(main.evaluationId)
 
           subject = "Submission Running on '%s'!" % evaluation.name
-          message = ["Hello %s,\n\n" % syn.getUserProfile(userid)['userName'],
+          message = ["Hello %s,\n\n" % name,
                      "Your results can be found here: https://www.synapse.org/#!Synapse:%s !\n\n" % args.parentid,
                      "\nSincerely,\nChallenge Administrator"]
 
