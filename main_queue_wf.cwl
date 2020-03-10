@@ -131,7 +131,7 @@ steps:
     run: get_backend_queue.cwl
     in:
       - id: queueids
-        default: ["9614426","9614427"]
+        default: ["9614426","9614427","9614435"]
       - id: synapse_config
         source: "#synapseConfig"
     out:
