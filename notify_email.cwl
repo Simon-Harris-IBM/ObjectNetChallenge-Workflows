@@ -65,7 +65,7 @@ requirements:
           #subject = "Submission Running on '%s'!" % evaluation.name
           subject = "ObjectNet Challenge Submission Running..."
           message = ["Hello %s,\n\n" % name,
-                     "Your submission has been assigned to run on '%s'." % evaluation.name,
+                     "Your submission has been assigned to run on '%s'.\n\n" % evaluation.name,
                      "Your results can be found here: https://www.synapse.org/#!Synapse:%s !\n\n" % args.parentid,
                      "\nSincerely,\nChallenge Administrator"]
 
