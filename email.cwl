@@ -78,9 +78,9 @@ requirements:
             with open(args.results) as json_data:
               annots = json.load(json_data)
             #subject = "Submission to '%s' scored!" % evaluation.name
-            subject = "ObjectNet Submission scored!"
+            subject = "ObjectNet Submission complete!"
             message = ["Hello %s,\n\n" % name,
-                       "Your submission (%s) is scored, below are your results:\n\n" % sub.name,
+                       "Your submission (%s) has been scored, below are your results:\n\n" % sub.name,
                        "\n".join([i + " : " + str(annots[i])
                                   for i in annots
                                   if i in ["accuracy", "top5_accuracy",
