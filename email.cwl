@@ -68,7 +68,8 @@ requirements:
           evaluation = syn.getEvaluation(sub.evaluationId)
 
           if args.status == "INVALID":
-            subject = "Submission to '%s' invalid!" % evaluation.name
+            #subject = "Submission to '%s' invalid!" % evaluation.name
+            subject = "ObjectNet Submission invalid!" 
             message = ["Hello %s,\n\n" % name,
                        "Your submission (%s) is invalid, below are the invalid reasons:\n\n" % sub.name,
                        args.invalid,
@@ -76,7 +77,8 @@ requirements:
           else:
             with open(args.results) as json_data:
               annots = json.load(json_data)
-            subject = "Submission to '%s' scored!" % evaluation.name
+            #subject = "Submission to '%s' scored!" % evaluation.name
+            subject = "ObjectNet Submission scored!"
             message = ["Hello %s,\n\n" % name,
                        "Your submission (%s) is scored, below are your results:\n\n" % sub.name,
                        "\n".join([i + " : " + str(annots[i])
