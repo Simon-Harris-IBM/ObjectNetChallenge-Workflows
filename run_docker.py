@@ -154,7 +154,7 @@ def main(syn, args):
                                               shm_size='12G',
                                               #cpu_period=50000,
                                               #cpu_quota=43500,
-                                              cpu_shares=890,
+                                              #cpu_shares=890,
                                               #cpu_quota=87,
                                               runtime='nvidia')
         except docker.errors.APIError as err:
