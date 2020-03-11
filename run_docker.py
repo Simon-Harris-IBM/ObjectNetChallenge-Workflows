@@ -150,8 +150,9 @@ def main(syn, args):
                                               detach=True, volumes=volumes,
                                               name=args.submissionid,
                                               network_disabled=True,
-                                              mem_limit='10g', stderr=True,
-                                              shm_size='64G',
+                                              mem_limit='32g', stderr=True,
+                                              shm_size='12G',
+                                              cpus=7.0,
                                               runtime='nvidia')
         except docker.errors.APIError as err:
             remove_docker_container(args.submissionid)
