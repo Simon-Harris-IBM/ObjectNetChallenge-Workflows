@@ -55,8 +55,9 @@ requirements:
           while not free_queues:
             for queue in args.queues:
               # list submissions that are evaluation in progress
+              received_submissions = list(syn.getSubmissionBundles(queue, status="RECEIVED"))
               evaluating_submissions = list(syn.getSubmissionBundles(queue, status="EVALUATION_IN_PROGRESS"))
-              if not evaluating_submissions:
+              if not evaluating_submissions and not received_submissions:
                 free_queues.append(queue)
             if not free_queues:
               time.sleep(30)
