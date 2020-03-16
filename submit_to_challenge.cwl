@@ -71,8 +71,8 @@ requirements:
             raise ValueError("Submission not valid")
             submission_status = {"prediction_file_status": "INVALID"}
           
-          with open('update_status.json', 'w') as status:
-              json_file.write(json.dumps(submission_status))
+          with open('update_status.json', 'w') as status_file:
+              status_file.write(json.dumps(submission_status))
 #outputs: []
 outputs:
   - id: json_out
