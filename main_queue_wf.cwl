@@ -145,7 +145,8 @@ steps:
       - id: status
         source: "#validate_docker/status"
       - id: previous_annotation_finished
-        source: "#annotate_docker_validation_with_output/finished"
+        #source: "#annotate_docker_validation_with_output/finished"
+        source: "#annotate_status/finished"
     out: [finished]
 
   # Get the backend queue we're going to send this submission to.

@@ -68,7 +68,7 @@ requirements:
             submission_status = {"prediction_file_status": "EVALUATION_IN_PROGRESS"}
             syn.submit(evaluation=args.evaluationid, entity=submission_file_ent, name=args.submissionid)
           else:
-            raise ValueError("Submission not valid")
+            #raise ValueError("Submission not valid")
             submission_status = {"prediction_file_status": "INVALID"}
           
           with open('update_status.json', 'w') as status_file:
