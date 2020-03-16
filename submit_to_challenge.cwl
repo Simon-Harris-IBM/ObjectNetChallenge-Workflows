@@ -65,7 +65,17 @@ requirements:
               json_file.write(json.dumps(submission_dict))
             submission_file = synapseclient.File(args.results, parentId=args.parentid)
             submission_file_ent = syn.store(submission_file)
+            submission_status = {"prediction_file_status": "EVALUATION_IN_PROGRESS"}
             syn.submit(evaluation=args.evaluationid, entity=submission_file_ent, name=args.submissionid)
           else:
             raise ValueError("Submission not valid")
-outputs: []
+            submission_status = {"prediction_file_status": "INVALID"}
+          
+          with open('update_status.json', 'w') as status:
+              json_file.write(json.dumps(submission_status))
+#outputs: []
+outputs:
+  - id: json_out
+    type: File
+    outputBinding:
+      glob: update_status.json

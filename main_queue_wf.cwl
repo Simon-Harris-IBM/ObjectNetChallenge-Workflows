@@ -51,27 +51,27 @@ steps:
         source: "#synapseConfig"
     out: [finished]
 
-  create_status_json:
-    run: create_status_annotation.cwl
-    in:
-      - id: status
-        valueFrom: "EVALUATION_IN_PROGRESS"
-    out: [json_out]
+#  create_status_json:
+#    run: create_status_annotation.cwl
+#    in:
+#      - id: status
+#        valueFrom: "EVALUATION_IN_PROGRESS"
+#    out: [json_out]
 
-  annotate_status:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: annotation_values
-        source: "#create_status_json/json_out"
-      - id: to_public
-        default: true
-      - id: force_change_annotation_acl
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-    out: [finished]
+#  annotate_status:
+#    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/annotate_submission.cwl
+#    in:
+#      - id: submissionid
+#        source: "#submissionId"
+#      - id: annotation_values
+#        source: "#create_status_json/json_out"
+#      - id: to_public
+#        default: true
+#      - id: force_change_annotation_acl
+#        default: true
+#      - id: synapse_config
+#        source: "#synapseConfig"
+#    out: [finished]
 
   set_permissions:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/set_permissions.cwl
@@ -174,4 +174,19 @@ steps:
         source: "#get_backend_queue/qid"
       - id: previous_annotation_finished
         source: "#annotate_docker_validation_with_output/finished"
-    out: []
+    out: [json_out]
+
+  annotate_status:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#submit_to_challenge/json_out"
+      - id: to_public
+        default: true
+      - id: force_change_annotation_acl
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+    out: [finished]
