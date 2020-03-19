@@ -6,6 +6,10 @@ cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: python
 
+hints:
+  DockerRequirement:
+    dockerPull: python:3.7
+
 inputs:
 
   - id: inputfile
