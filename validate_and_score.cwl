@@ -6,9 +6,9 @@ cwlVersion: v1.0
 class: CommandLineTool
 baseCommand: python3
 
-hints:
-  DockerRequirement:
-    dockerPull: python:3.7
+#hints:
+#  DockerRequirement:
+#    dockerPull: python:3.7
 
 inputs:
 
