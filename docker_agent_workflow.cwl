@@ -192,7 +192,7 @@ steps:
         source: "#validate_and_score/results"
       - id: parentid
         #source: "#adminUploadSynId"
-        source: #get_linked_submissionid/submissionid
+        source: #get_submissionid/submissionid
         #source: "#get_docker_submission/submitter_synid"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
