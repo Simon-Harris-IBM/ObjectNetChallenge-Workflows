@@ -52,6 +52,7 @@ steps:
         source: "#synapseConfig"
     out:
       - id: submissionid
+      - id: submissionidStr
 
   get_docker_submission:
     run: get_submission_docker.cwl
@@ -192,7 +193,7 @@ steps:
         source: "#validate_and_score/results"
       - id: parentid
         #source: "#adminUploadSynId"
-        source: "#get_submissionid/submissionid"
+        source: "#get_submissionid/submissionidStr"
         #source: "#get_docker_submission/submitter_synid"
       - id: used_entity
         source: "#get_docker_submission/entity_id"
