@@ -51,7 +51,7 @@ outputs:
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['submissionid'])
   - id: submissionidStr
-    type: str
+    type: string
     outputBinding:
       # This tool depends on the submission.json to be named submission.json
       glob: submission.json
