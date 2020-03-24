@@ -91,7 +91,6 @@ steps:
       - id: docker_registry
       - id: docker_authentication
 
-
   annotate_submission_main_userid:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
     in:
@@ -138,7 +137,7 @@ steps:
       - id: predictions
 
   upload_results:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/upload_to_synapse.cwl
+    run: upload_to_synapse.cwl
     in:
       - id: infile
         source: "#run_docker/predictions"
