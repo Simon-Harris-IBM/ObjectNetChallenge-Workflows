@@ -59,7 +59,7 @@ requirements:
           for submission in submissions:
             if submission['name'] == sub.id:
               submitter_folder = submission['id']
-          result = {'orgSagebionetworksSynapseWorkflowOrchestratorSubmissionFolder': submitter_folder}
+          result = {'submitter_folder': submitter_folder}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
 
