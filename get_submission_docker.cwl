@@ -55,13 +55,15 @@ requirements:
                     'docker_digest': sub.get("dockerDigest",""),
                     'entityid': sub.entity.id}
           status = syn.getSubmissionStatus(args.submissionid)
-          get_values = filter(lambda x: x.get('key') in ['admin_folder', 'orgSagebionetworksSynapseWorkflowOrchestratorSubmissionFolder'],
+          get_values = filter(lambda x: x.get('key') in ['admin_folder', 'submitter_folder'],
                               status.annotations['stringAnnos'])
           add_values = {value['key']: value['value'] for value in get_values}
           # Just for testing purposes - if all the steps work, this annotations
           # should exist
           if add_values.get("admin_folder") is None:
             add_values['admin_folder'] = ''
+          if add_values.get("submitter_folder") is None:
+            add_values['submitter_folder'] = ''
           result.update(add_values)
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
@@ -101,7 +103,7 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['orgSagebionetworksSynapseWorkflowOrchestratorSubmissionFolder'])
+      outputEval: $(JSON.parse(self[0].contents)['submitter_folder'])
   - id: results
     type: File
     outputBinding:
