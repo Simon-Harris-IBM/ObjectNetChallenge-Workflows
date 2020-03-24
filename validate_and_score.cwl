@@ -143,7 +143,7 @@ requirements:
               err_exit('Caught exception while parsing csv file: {}'.format(args.filename))
 
           if linecnt < 1:
-	          err_exit('Output CSV file ({}) contained no valid rows'.format(args.filename))
+              err_exit('Output CSV file ({}) contained no valid rows'.format(args.filename))
 
           results = { 'accuracy': 100.0 * num_correct / total,
                       'top5_accuracy': 100.0 * num5_correct / total,
