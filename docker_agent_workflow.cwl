@@ -91,7 +91,6 @@ steps:
       - id: docker_registry
       - id: docker_authentication
 
-
   annotate_submission_main_userid:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/annotate_submission.cwl
     in:
