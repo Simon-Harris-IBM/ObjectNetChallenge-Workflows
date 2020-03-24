@@ -138,7 +138,7 @@ steps:
       - id: predictions
 
   upload_results:
-    run: upload_to_synapse.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.1/upload_to_synapse.cwl
     in:
       - id: infile
         source: "#run_docker/predictions"
